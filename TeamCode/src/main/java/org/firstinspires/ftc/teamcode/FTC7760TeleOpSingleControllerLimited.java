@@ -40,7 +40,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class FTC7760TeleOpSingleControllerLimited extends FTC7760OpBase {
 
     @Override
-    enum modes { Default, LinearArm }
     public void runOpMode() {
         setupRobot();
 
@@ -50,11 +49,11 @@ public class FTC7760TeleOpSingleControllerLimited extends FTC7760OpBase {
         armResetMin();
         
         while (opModeIsActive()) {
-
+            
             // Changing the mode changes how some controls work
-            modes mode = Default;
-            if (gamepad1.right_trigger) {
-                mode = LinearArm;
+            int mode = 0;
+            if (gamepad1.right_trigger >= 0.1) {
+                mode = 1;
             }
 
             if (gamepad1.start) {
@@ -71,7 +70,7 @@ public class FTC7760TeleOpSingleControllerLimited extends FTC7760OpBase {
             }
             
             //Used for manual and single Quack Wheel
-            quackWheelReverse = mode == LinearArm;
+            quackWheelReverse = mode == 1;
             
             // Manual Quack Wheel input
             quackWheelManualDefault = gamepad1.x;
@@ -87,7 +86,7 @@ public class FTC7760TeleOpSingleControllerLimited extends FTC7760OpBase {
             quackWheelSingle();
 
             // Intake input & arm input
-            if (mode == LinearArm) {
+            if (mode == 1) {
                 armUp = gamepad1.left_bumper;
                 armDown = gamepad1.right_bumper && !gamepad1.left_bumper;
             } else {

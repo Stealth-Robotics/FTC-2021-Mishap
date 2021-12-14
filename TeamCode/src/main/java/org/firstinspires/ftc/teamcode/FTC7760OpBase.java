@@ -368,7 +368,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     }
 
     public void armResetMinTeleOp() {
-        while (!armLimitSwitch.getState(), quitArmResetMin) {
+        while (!armLimitSwitch.getState() && !quitArmResetMin) {
             armDrive.setTargetPosition(-7760);
             armDrive.setPower(0.6);
         }
