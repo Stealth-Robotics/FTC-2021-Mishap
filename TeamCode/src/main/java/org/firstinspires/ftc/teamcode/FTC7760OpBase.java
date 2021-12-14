@@ -80,6 +80,9 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     // Variable speed the arm is currently moving at
     public int armLocationDelta = armIncrement;
 
+    //Used to force quit the armResetMinTeleOp function
+    public boolean  quitArmResetMin;
+
     // True if intake is intaking
     public boolean intakePullingIn = false;
 
@@ -356,9 +359,16 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     }
 
     // Function which resets minimum arm position to current position
-    // TODO: Get rid of controller input in armResetMin
     public void armResetMin() {
-        while (!armLimitSwitch.getState() && !gamepad2.right_stick_button) {
+        while (!armLimitSwitch.getState()) {
+            armDrive.setTargetPosition(-7760);
+            armDrive.setPower(0.6);
+        }
+        armLimitSwitchReset();
+    }
+
+    public void armResetMinTeleOp() {
+        while (!armLimitSwitch.getState(), quitArmResetMin) {
             armDrive.setTargetPosition(-7760);
             armDrive.setPower(0.6);
         }
