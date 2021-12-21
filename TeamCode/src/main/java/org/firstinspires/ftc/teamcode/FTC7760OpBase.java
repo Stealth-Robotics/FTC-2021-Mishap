@@ -54,7 +54,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     public final int armMaxLocation = 4000;
 
     // Base speed of arm movement
-    public final int armIncrement = 17;
+    public final int armIncrement = 10; // TODO: tune or new arm motor speed!!
 
     /*-------------------------------------------------------------------
     Variables used to control the robot that change throughout the match:
@@ -411,7 +411,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
         } else {
             // Sets the arm to the correct position
             armDrive.setTargetPosition(armLocation);
-            armDrive.setPower(1);
+            armDrive.setPower(1);  // TODO: switch to using setVelocity!!
         }
 
         telemetry.addData("Arm", "Location %d", armLocation);
@@ -451,7 +451,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     private void setArmPosition(int destination) {
         armLocation = destination; // Ensures this works well with manual control, too.
         armDrive.setTargetPosition(armLocation);
-        armDrive.setPower(1.0);
+        armDrive.setPower(1.0);  // TODO: switch to setVelocity
     }
 
     // Function for displaying telemetry
