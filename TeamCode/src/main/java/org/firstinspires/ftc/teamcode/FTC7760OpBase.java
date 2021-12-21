@@ -27,7 +27,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     public DcMotor rightRearDrive = null;
     public DcMotorEx duckDrive = null;
     public DcMotorEx armDrive = null;
-    public DcMotor intakeDrive = null;
+    public DcMotorEx intakeDrive = null;
     public BNO055IMU imu = null;
     public DigitalChannel armLimitSwitch;
 
@@ -35,8 +35,11 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     Constants that are not modified during the match:
     -------------------------------------------------*/
 
+    // Reverse intake spin
+    public final int reverseIntakeSpeed = 850;
+
     // The fast and slow speeds of the quack wheel
-    public final int quackSlowSpeed = 500;
+    public final int quackSlowSpeed = 100;
     public final int quackSuperSpeed = 10000;
     public final int quackAutoSpeed = 250;
 
@@ -118,7 +121,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRearDrive");
         duckDrive = hardwareMap.get(DcMotorEx.class, "Quack wheel");
         armDrive = hardwareMap.get(DcMotorEx.class, "arm");
-        intakeDrive = hardwareMap.get(DcMotor.class, "intake");
+        intakeDrive = hardwareMap.get(DcMotorEx.class, "intake");
         armLimitSwitch = hardwareMap.get(DigitalChannel.class, "armLimitSwitch");
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -132,6 +135,11 @@ public abstract class FTC7760OpBase extends LinearOpMode {
         duckDrive.setDirection(DcMotor.Direction.FORWARD);
         duckDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         duckDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        
+        intakeDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intakeDrive.setDirection(DcMotor.Direction.FORWARD);
+        intakeDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         
         armDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armDrive.setTargetPositionTolerance(20);
@@ -332,9 +340,10 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     public void intake() {
         if (intakeIn || intakeOut) {
             if (intakeOut) {
-                intakeDrive.setPower(0.5);
+                intakeDrive.setPower(1.0);
+                intakeDrive.setVelocity(reverseIntakeSpeed);
             } else if (intakeIn) {
-                intakeDrive.setPower(-1);
+                intakeDrive.setPower(-1.0);
                 intakePullingIn = true;
             }
         } else {
@@ -416,7 +425,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     // These set the destination for the arm and start it moving.
 
     public void armPresetHigh() {
-        setArmPosition(2775);
+        setArmPosition(2800);
     }
 
     public void armPresetMiddle() {

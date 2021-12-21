@@ -115,6 +115,7 @@ public class FTC7760TeleOpDualControllerMode extends FTC7760OpBase {
             holdingIntakeIn = gamepad1.left_bumper;
             holdingIntakeOut = gamepad1.right_bumper;
             intake();
+            
             // Arm presets input
             if (gamepad2.dpad_up) {
                 armPresetHigh();
