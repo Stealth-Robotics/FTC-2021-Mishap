@@ -20,7 +20,7 @@ public class FTC7760FathomAutoBlueQuack extends FTC7760FathomAutoBase {
         armPresetDrive();
         driveForFathoms(0.0, movement_speed, 0.0, 1.0 / 3.0 / 24.0 * 1.0);
         if (tseStartingPosition == TSEDetector.TSEPosition.LEFT) {
-            driveForFathoms(0.0, movement_speed, 0.0, 1.0 / 3.0 / 24.0 * 0.5);
+            driveForFathoms(0.0, -movement_speed, 0.0, -1.0 / 3.0 / 24.0 * 2.0);
         } else if (tseStartingPosition == TSEDetector.TSEPosition.RIGHT) {
             driveForFathoms(0.0, -movement_speed, 0.0, -1.0 / 3.0 / 24.0 * 0.5);
         }

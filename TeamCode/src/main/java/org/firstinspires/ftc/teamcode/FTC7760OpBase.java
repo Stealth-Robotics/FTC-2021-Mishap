@@ -39,7 +39,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     public final int reverseIntakeSpeed = 850;
 
     // The fast and slow speeds of the quack wheel
-    public final int quackSlowSpeed = 100;
+    public final int quackSlowSpeed = 500;
     public final int quackSuperSpeed = 10000;
     public final int quackAutoSpeed = 250;
 
@@ -51,10 +51,10 @@ public abstract class FTC7760OpBase extends LinearOpMode {
 
     // Arm minimum and maximum location, used to stop the arm from moving where it cannot move
     public final int armMinLocation = 0;
-    public final int armMaxLocation = 4000;
+    public final int armMaxLocation = 1700;
 
     // Base speed of arm movement
-    public final int armIncrement = 10; // TODO: tune or new arm motor speed!!
+    public final int armIncrement =10; // TODO: tune or new arm motor speed!!
 
     /*-------------------------------------------------------------------
     Variables used to control the robot that change throughout the match:
@@ -142,13 +142,13 @@ public abstract class FTC7760OpBase extends LinearOpMode {
         intakeDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         
         armDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armDrive.setTargetPositionTolerance(20);
+        armDrive.setTargetPositionTolerance(10);
         armDrive.setTargetPosition(0);
         armDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armDrive.setDirection(DcMotor.Direction.REVERSE);
         armDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //                                    P     I   D    F
-        armDrive.setVelocityPIDFCoefficients(5.0, 0.1, 2.0, 7.0);
+        armDrive.setVelocityPIDFCoefficients(13.0, 0.002, 0.1, 2.0);
         // armDrive.setPositionPIDFCoefficients(50.0);
         // NOTE: If we uncommented the next, the arm could get stuck on a block. I'm not letting that happen.
         // armResetMin();
@@ -411,7 +411,8 @@ public abstract class FTC7760OpBase extends LinearOpMode {
         } else {
             // Sets the arm to the correct position
             armDrive.setTargetPosition(armLocation);
-            armDrive.setPower(1);  // TODO: switch to using setVelocity!!
+            //armDrive.setPower(1);  // TODO: switch to using setVelocity!!
+            armDrive.setVelocity(1500);
         }
 
         telemetry.addData("Arm", "Location %d", armLocation);
@@ -425,33 +426,34 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     // These set the destination for the arm and start it moving.
 
     public void armPresetHigh() {
-        setArmPosition(2800);
+        setArmPosition(1200);
     }
 
     public void armPresetMiddle() {
-        setArmPosition(3250);
+        setArmPosition(1350);
     }
 
     public void armPresetLow() {
-        setArmPosition(3550);
+        setArmPosition(1530);
     }
 
     public void armPresetSafe() {
-        setArmPosition(2000);
+        setArmPosition(800);
     }
 
     public void armPresetDrive() {
-        setArmPosition(300);
+        setArmPosition(0);
     }
 
     public void armPresetIntake() {
-        setArmPosition(0);
+        setArmPosition(120);
     }
     
     private void setArmPosition(int destination) {
         armLocation = destination; // Ensures this works well with manual control, too.
         armDrive.setTargetPosition(armLocation);
-        armDrive.setPower(1.0);  // TODO: switch to setVelocity
+//        armDrive.setPower(1.0);  // TODO: switch to setVelocity
+        armDrive.setVelocity(1500);
     }
 
     // Function for displaying telemetry
