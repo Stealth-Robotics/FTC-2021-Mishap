@@ -36,7 +36,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     -------------------------------------------------*/
 
     // Reverse intake spin
-    public final int reverseIntakeSpeed = 850;
+    public final int reverseIntakeSpeed = 400;
 
     // The fast and slow speeds of the quack wheel
     public final int quackSlowSpeed = 500;
@@ -340,7 +340,6 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     public void intake() {
         if (intakeIn || intakeOut) {
             if (intakeOut) {
-                intakeDrive.setPower(1.0);
                 intakeDrive.setVelocity(reverseIntakeSpeed);
             } else if (intakeIn) {
                 intakeDrive.setPower(-1.0);
@@ -426,7 +425,7 @@ public abstract class FTC7760OpBase extends LinearOpMode {
     // These set the destination for the arm and start it moving.
 
     public void armPresetHigh() {
-        setArmPosition(1200);
+        setArmPosition(1125);
     }
 
     public void armPresetMiddle() {
